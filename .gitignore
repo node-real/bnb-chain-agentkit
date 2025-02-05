@@ -1,0 +1,10 @@
+.venv/
+.idea/
+.vscode/
+.ruff_cache/
+.env
+
+**/__pycache__/
+**/.DS_Store
+
+langchain_bnb_chain.egg-info/
