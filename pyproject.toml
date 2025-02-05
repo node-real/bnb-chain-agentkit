@@ -1,5 +1,5 @@
 [project]
-name = "langchain-bnb-chain"
+name = "bnb-chain-agentkit"
 version = "0.0.1"
 description = "Langchain extension for BNB Chain"
 readme = "README.md"
@@ -44,8 +44,6 @@ exclude = [
     "site-packages",
     "venv",
 ]
-
-extend-include = ["*.ipynb"]
 
 line-length = 120
 indent-width = 4

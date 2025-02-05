@@ -3,9 +3,9 @@
 from langchain_core.tools import BaseTool
 from langchain_core.tools.base import BaseToolkit
 
-from langchain_bnb_chain.actions import BNB_CHAIN_ACTIONS
-from langchain_bnb_chain.tools import BnbChainTool
-from langchain_bnb_chain.utils import BnbChainAPIWrapper
+from bnb_chain_agentkit.actions import BNB_CHAIN_ACTIONS
+from bnb_chain_agentkit.tools import BnbChainTool
+from bnb_chain_agentkit.utils import BnbChainAPIWrapper
 
 
 class BnbChainToolkit(BaseToolkit):

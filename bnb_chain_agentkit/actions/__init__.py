@@ -1,11 +1,11 @@
-from langchain_bnb_chain.actions.bnb_chain_action import BnbChainAction
-from langchain_bnb_chain.actions.bridge import BridgeAction
-from langchain_bnb_chain.actions.deploy import DeployAction
-from langchain_bnb_chain.actions.faucet import FaucetAction
-from langchain_bnb_chain.actions.get_balance import GetBalanceAction
-from langchain_bnb_chain.actions.stake import StakeAction
-from langchain_bnb_chain.actions.swap import SwapAction
-from langchain_bnb_chain.actions.transfer import TransferAction
+from bnb_chain_agentkit.actions.bnb_chain_action import BnbChainAction
+from bnb_chain_agentkit.actions.bridge import BridgeAction
+from bnb_chain_agentkit.actions.deploy import DeployAction
+from bnb_chain_agentkit.actions.faucet import FaucetAction
+from bnb_chain_agentkit.actions.get_balance import GetBalanceAction
+from bnb_chain_agentkit.actions.stake import StakeAction
+from bnb_chain_agentkit.actions.swap import SwapAction
+from bnb_chain_agentkit.actions.transfer import TransferAction
 
 
 def get_all_bnb_chain_actions() -> list[type[BnbChainAction]]:

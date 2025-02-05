@@ -5,7 +5,7 @@ from typing import Optional
 from pydantic import BaseModel, Field
 from web3 import Web3
 
-from langchain_bnb_chain.actions.abi import (
+from bnb_chain_agentkit.actions.abi import (
     ERC20_ABI,
     IPANCAKE_QUOTER_V2_ABI,
     IPANCAKE_V3_FACTORY_ABI,
@@ -13,9 +13,9 @@ from langchain_bnb_chain.actions.abi import (
     IPANCAKE_V3_ROUTER_ABI,
     WBNB_ABI,
 )
-from langchain_bnb_chain.actions.bnb_chain_action import BnbChainAction
-from langchain_bnb_chain.actions.utils.uints import parse_uints
-from langchain_bnb_chain.provider.bnb_chain_provider import BnbChainProvider, SupportedChain
+from bnb_chain_agentkit.actions.bnb_chain_action import BnbChainAction
+from bnb_chain_agentkit.actions.utils.uints import parse_uints
+from bnb_chain_agentkit.provider.bnb_chain_provider import BnbChainProvider, SupportedChain
 
 logger = logging.getLogger(__name__)
 

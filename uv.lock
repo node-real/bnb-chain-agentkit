@@ -144,7 +144,7 @@ wheels = [
 ]
 
 [[package]]
-name = "bnb-chain"
+name = "bnb-chain-agentkit"
 version = "0.0.1"
 source = { virtual = "." }
 dependencies = [
