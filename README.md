@@ -1,4 +1,4 @@
-## Langchain-bnb-chain
+## BNB-chain-agentkit
 
 This is a Langchain extension for BNB Chain.
 
@@ -13,7 +13,7 @@ This toolkit equips LLM agents with the ability to interact with BNB Chain and e
 ### Installation
 
 ```bash
-pip install langchain-bnb-chain
+pip install bnb-chain-agentkit
 ```
 
 ### Environment Variables
@@ -33,8 +33,8 @@ You can set your own RPC endpoint or use a public one listed here: [https://docs
 ### Basic Setup
 
 ```python
-from langchain_bnb_chain.agent_toolkits import BnbChainToolkit
-from langchain_bnb_chain.utils import BnbChainAPIWrapper
+from bnb_chain_agentkit.agent_toolkits import BnbChainToolkit
+from bnb_chain_agentkit.utils import BnbChainAPIWrapper
 
 # Configure BNB Chain Langchain Extension.
 bnb_chain = BnbChainAPIWrapper()

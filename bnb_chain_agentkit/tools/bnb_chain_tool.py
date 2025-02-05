@@ -13,7 +13,7 @@ from langchain_core.callbacks import AsyncCallbackManagerForToolRun, CallbackMan
 from langchain_core.tools import BaseTool
 from pydantic import BaseModel
 
-from langchain_bnb_chain.utils.bnb_chain_api_wrapper import BnbChainAPIWrapper
+from bnb_chain_agentkit.utils.bnb_chain_api_wrapper import BnbChainAPIWrapper
 
 
 class BnbChainTool(BaseTool):  # type: ignore[override]

@@ -8,8 +8,8 @@ import websockets
 from pydantic import BaseModel, Field
 from websockets.exceptions import ConnectionClosed, WebSocketException
 
-from langchain_bnb_chain.actions.bnb_chain_action import BnbChainAction
-from langchain_bnb_chain.provider.bnb_chain_provider import BnbChainProvider
+from bnb_chain_agentkit.actions.bnb_chain_action import BnbChainAction
+from bnb_chain_agentkit.provider.bnb_chain_provider import BnbChainProvider
 
 logger = logging.getLogger(__name__)
 

@@ -8,7 +8,7 @@ This example demonstrates an agent setup as a terminal style chatbot with access
 
 ## Installation
 ```bash
-pip install langchain-bnb-chain
+pip install bnb-chain-agentkit
 ```
 
 ## Run the Chatbot

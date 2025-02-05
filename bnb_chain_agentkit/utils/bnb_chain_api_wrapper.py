@@ -7,7 +7,7 @@ from typing import Any
 from langchain_core.utils import get_from_dict_or_env
 from pydantic import BaseModel, model_validator
 
-from langchain_bnb_chain.provider.bnb_chain_provider import BnbChainProvider
+from bnb_chain_agentkit.provider.bnb_chain_provider import BnbChainProvider
 
 
 class BnbChainAPIWrapper(BaseModel):
@@ -24,10 +24,10 @@ class BnbChainAPIWrapper(BaseModel):
         opbnb_provider_url = get_from_dict_or_env(values, 'opbnb_provider_url', 'OPBNB_PROVIDER_URL')
 
         try:
-            import langchain_bnb_chain
+            import bnb_chain_agentkit
         except Exception:
             raise ImportError(
-                "BNB Chain toolkits is not installed. " "Please install it with `pip install langchain-bnb-chain`"
+                "BNB Chain toolkits is not installed. " "Please install it with `pip install bnb-chain-agentkit`"
             ) from None
 
         provider = BnbChainProvider(private_key, bsc_provider_url, opbnb_provider_url)

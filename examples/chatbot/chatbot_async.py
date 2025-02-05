@@ -8,8 +8,8 @@ from langchain_openai import ChatOpenAI
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.prebuilt import create_react_agent
 
-from langchain_bnb_chain.agent_toolkits import BnbChainToolkit
-from langchain_bnb_chain.utils import BnbChainAPIWrapper
+from bnb_chain_agentkit.agent_toolkits import BnbChainToolkit
+from bnb_chain_agentkit.utils import BnbChainAPIWrapper
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger('Chatbot')
