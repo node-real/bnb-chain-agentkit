@@ -1,0 +1,12 @@
+[project]
+name = "chatbot"
+version = "0.1.0"
+description = "BNB Chain Agentkit Chatbot Example"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "bnb-chain-agentkit>=0.1.0",
+]
+
+[tool.uv.sources]
+bnb-chain-agentkit = { workspace = true }

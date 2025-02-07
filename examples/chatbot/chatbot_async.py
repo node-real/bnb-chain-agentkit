@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import readline  # noqa: F401
 import sys
 
 from dotenv import load_dotenv
@@ -66,6 +67,9 @@ async def run_chat_mode(agent_executor, config):
                 event['messages'][-1].pretty_print()
 
         except KeyboardInterrupt:
+            print('Goodbye Agent!')
+            sys.exit(0)
+        except EOFError:  # Catch EOFError for handling Ctrl+D
             print('Goodbye Agent!')
             sys.exit(0)
 

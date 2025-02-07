@@ -23,13 +23,6 @@ class BnbChainAPIWrapper(BaseModel):
         bsc_provider_url = get_from_dict_or_env(values, 'bsc_provider_url', 'BSC_PROVIDER_URL')
         opbnb_provider_url = get_from_dict_or_env(values, 'opbnb_provider_url', 'OPBNB_PROVIDER_URL')
 
-        try:
-            import bnb_chain_agentkit
-        except Exception:
-            raise ImportError(
-                "BNB Chain toolkits is not installed. " "Please install it with `pip install bnb-chain-agentkit`"
-            ) from None
-
         provider = BnbChainProvider(private_key, bsc_provider_url, opbnb_provider_url)
 
         values['provider'] = provider

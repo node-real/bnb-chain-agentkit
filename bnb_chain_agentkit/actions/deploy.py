@@ -69,8 +69,9 @@ def deploy(
     """
 
     client = provider.get_current_client()
-    prepare_solc()
+    account = provider.get_address()
 
+    prepare_solc()
     if contract_type == ContractType.ERC20:
         if token_name is None:
             return 'Token name is required for ERC20.'
@@ -78,7 +79,7 @@ def deploy(
             return 'Token symbol is required for ERC20.'
 
         initial_supply_wei = Web3.to_wei(initial_supply, 'ether') if initial_supply else 0
-        contract_address = deploy_contract(client, 'ERC20', token_name, token_symbol, initial_supply_wei)
+        contract_address = deploy_contract(client, 'ERC20', token_name, token_symbol, initial_supply_wei, account)
     elif contract_type == ContractType.ERC721:
         if token_name is None:
             return 'Token name is required for ERC721.'
@@ -87,14 +88,14 @@ def deploy(
         if base_uri is None:
             return 'Base uri is required for ERC721.'
 
-        contract_address = deploy_contract(client, 'ERC721', token_name, token_symbol, base_uri)
+        contract_address = deploy_contract(client, 'ERC721', token_name, token_symbol, base_uri, account)
     elif contract_type == ContractType.ERC1155:
         if base_uri is None:
             return 'Base uri is required for ERC1155.'
 
-        contract_address = deploy_contract(client, 'ERC1155', base_uri)
+        contract_address = deploy_contract(client, 'ERC1155', base_uri, account)
 
-    return f'Contract {contract_type} deployed successfully. Contract address: {contract_address}'
+    return f'{contract_type.value} deployed successfully. Contract address: {contract_address}'
 
 
 def deploy_contract(client: Web3, contract_name: str, *args) -> ChecksumAddress:
@@ -108,9 +109,12 @@ def deploy_contract(client: Web3, contract_name: str, *args) -> ChecksumAddress:
             optimize_runs=200,
         )
 
-    _, contract_interface = compiled_sol.popitem()
+    contract_interface = compiled_sol[f'<stdin>:{contract_name}Contract']
     bytecode = contract_interface['bin']
     abi = contract_interface['abi']
+
+    if len(bytecode) == 0:
+        raise ValueError('Bytecode is empty')
 
     contract = client.eth.contract(abi=abi, bytecode=bytecode)
     tx_hash = contract.constructor(*args).transact()

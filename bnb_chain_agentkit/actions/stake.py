@@ -78,7 +78,7 @@ def stake(
 def do_deposit(client: Web3, address: str, amount: str) -> str:
     amount_wei = Web3.to_wei(amount, 'ether')
     lista_dao = client.eth.contract(LISTA_DAO_ADDRESS, abi=LISTA_DAO_ABI)
-    tx_hash = lista_dao.functions.deposit(amount_wei).transact({'value': amount_wei})
+    tx_hash = lista_dao.functions.deposit().transact({'value': amount_wei})
     client.eth.wait_for_transaction_receipt(tx_hash)
 
     slis_bnb = client.eth.contract(SLIS_BNB_ADDRESS, abi=ERC20_ABI)
@@ -119,19 +119,21 @@ def do_claim(client: Web3, address: str) -> str:
     lista_dao = client.eth.contract(LISTA_DAO_ADDRESS, abi=LISTA_DAO_ABI)
     requests = lista_dao.functions.getUserWithdrawalRequests(address).call()
 
+    txs = []
     total_claimed = 0
     for i in range(len(requests)):
         is_claimable, amount = lista_dao.functions.getUserRequestStatus(address, i).call()
         if is_claimable:
             tx_hash = lista_dao.functions.claimWithdraw(i).transact()
             client.eth.wait_for_transaction_receipt(tx_hash)
+            txs.append(tx_hash)
             total_claimed += amount
         else:
             break
 
     total_claimed_formatted = Web3.from_wei(total_claimed, 'ether')
 
-    return f'Claimed {total_claimed_formatted} slisBNB from Lista DAO. Transaction hash: {tx_hash.to_0x_hex()}'
+    return f'Claimed {total_claimed_formatted} slisBNB from Lista DAO. Transaction hashes: {", ".join([tx.to_0x_hex() for tx in txs])}'
 
 
 class StakeAction(BnbChainAction):
