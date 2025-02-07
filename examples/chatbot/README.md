@@ -4,11 +4,22 @@ This example demonstrates an agent setup as a terminal style chatbot with access
 
 ## Requirements
 - Python 3.12+
+- Uv for package management and tooling
+  - [Uv installation instructions](https://docs.astral.sh/uv/getting-started/installation/)
 - [OpenAI API Key](https://platform.openai.com/docs/quickstart#create-and-export-an-api-key)
 
 ## Installation
 ```bash
-pip install bnb-chain-agentkit
+uv venv --python 3.12
+source .venv/bin/activate
+
+uv sync
+```
+
+TODO: As of 2025-02-07, the `bnb-chain-agentkit` package is not published to PyPI. So you need to install it from source.
+
+```bash
+uv pip install -e ../.. # the root of the repo
 ```
 
 ## Run the Chatbot
@@ -21,5 +32,5 @@ pip install bnb-chain-agentkit
   - OPENAI_API_KEY
 
 ```bash
-python chatbot_async.py
+uv run ./chatbot_async.py
 ```

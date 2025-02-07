@@ -27,10 +27,10 @@ class BnbChainProvider:
     def __init__(self, private_key: str, bsc_provider_url: str, opbnb_provider_url: Optional[str] = None):
         w3 = Web3(Web3.HTTPProvider(bsc_provider_url))
         if not w3.is_connected():
-            raise ValueError('Failed to connect to BSC provider')
+            raise ValueError(f'Failed to connect to BSC provider. BSC provider URL: {bsc_provider_url}')
 
         if w3.eth.chain_id != CHAIN_ID_BSC:
-            raise ValueError('BSC provider is not connected to BSC')
+            raise ValueError(f'Provider is not connected to BSC. Chain ID: {w3.eth.chain_id}')
 
         account = w3.eth.account.from_key(private_key)
         self.address = account.address
@@ -47,10 +47,10 @@ class BnbChainProvider:
         if opbnb_provider_url:
             w3 = Web3(Web3.HTTPProvider(opbnb_provider_url))
             if not w3.is_connected():
-                raise ValueError('Failed to connect to OPBNB provider')
+                raise ValueError(f'Failed to connect to opBNB provider. opBNB provider URL: {opbnb_provider_url}')
 
             if w3.eth.chain_id != CHAIN_ID_OPBNB:
-                raise ValueError('opBNB provider is not connected to opBNB')
+                raise ValueError(f'Provider is not connected to opBNB. Chain ID: {w3.eth.chain_id}')
 
             w3.middleware_onion.inject(SignAndSendRawMiddlewareBuilder.build(account), layer=0)  # type: ignore
             w3.eth.default_account = account.address

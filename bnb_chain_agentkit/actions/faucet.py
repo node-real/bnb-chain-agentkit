@@ -62,7 +62,6 @@ async def faucet(
     headers = {
         'Connection': 'Upgrade',
         'Upgrade': 'websocket',
-        'X-Forwarded-For': '127.0.0.1,127.0.0.1',
     }
     message = {
         'tier': 0,

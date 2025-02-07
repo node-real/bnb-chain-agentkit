@@ -44,7 +44,7 @@ def get_balance(provider: BnbChainProvider, account: Optional[str], token: str) 
         token (str): The token to get the balance for, e.g. `BNB` or `0x...`.
 
     Returns:
-        str: A message containing the balance information of the account for the given asset.
+        str: A message containing the balance and decimals of the account for the given asset.
     """
 
     client = provider.get_current_client()

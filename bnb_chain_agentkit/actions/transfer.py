@@ -56,6 +56,7 @@ def transfer(
     """
 
     client = provider.get_current_client()
+    recipient = Web3.to_checksum_address(recipient)
 
     if token == 'BNB':
         tx_hash = client.eth.send_transaction(
