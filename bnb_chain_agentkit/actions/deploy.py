@@ -11,16 +11,16 @@ from solcx.exceptions import SolcNotInstalled
 from web3 import Web3
 
 from bnb_chain_agentkit.actions.bnb_chain_action import BnbChainAction
-from bnb_chain_agentkit.provider.bnb_chain_provider import BnbChainProvider
+from bnb_chain_agentkit.provider.bnb_chain_provider import BnbChainProvider, SupportedChain
 
 logger = logging.getLogger(__name__)
 
 _solc_pragma = 'pragma solidity ^0.8.22;'
 
 DEPLOY_PROMPT = """
-This tool helps deploy an ERC contract on BSC.
+This tool helps deploy an ERC contract on BSC or opBNB.
 
-It takes contract type, token name, token symbol, initial supply and base uri as inputs.
+It takes contract type, token name, token symbol, initial supply, base uri and chain as inputs.
 
 Important notes:
 - For ERC20, token name and token symbol are required.
@@ -44,6 +44,7 @@ class DeployInput(BaseModel):
     token_symbol: Optional[str] = Field(None, description='The token symbol. Must be provided for ERC20 and ERC721.')
     initial_supply: Optional[str] = Field('1000000000000000000', description='The initial supply.')
     base_uri: Optional[str] = Field(None, description='The base uri. Must be provided for ERC721 and ERC1155.')
+    chain: SupportedChain = Field(SupportedChain.BSC, description='The chain to perform the deploy on.')
 
 
 def deploy(
@@ -53,8 +54,10 @@ def deploy(
     token_symbol: Optional[str],
     initial_supply: Optional[str],
     base_uri: Optional[str],
+    chain: SupportedChain,
+
 ) -> str:
-    """Deploy an ERC contract on BSC.
+    """Deploy an ERC contract on BSC or opBNB.
 
     Args:
         provider (BnbChainProvider): The provider to use for the deploy.
@@ -63,12 +66,13 @@ def deploy(
         token_symbol (Optional[str]): The token symbol.
         initial_supply (Optional[str]): The initial supply.
         base_uri (Optional[str]): The base uri.
+        chain (Optional[str]): The chain to perform the swap on.
 
     Returns:
         str: A message containing the action details.
     """
 
-    client = provider.get_current_client()
+    client = provider.get_client(chain)
     account = provider.get_address()
 
     prepare_solc()
@@ -78,7 +82,8 @@ def deploy(
         if token_symbol is None:
             return 'Token symbol is required for ERC20.'
 
-        initial_supply_wei = Web3.to_wei(initial_supply, 'ether') if initial_supply else 0
+        initial_supply_wei = Web3.to_wei(initial_supply, 'wei') if initial_supply else 0
+        print("initial_supply is " + str(initial_supply) , "initial_supply_wei is " +str(initial_supply_wei))
         contract_address = deploy_contract(client, 'ERC20', token_name, token_symbol, initial_supply_wei, account)
     elif contract_type == ContractType.ERC721:
         if token_name is None:
