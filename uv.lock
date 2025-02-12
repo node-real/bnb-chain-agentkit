@@ -152,7 +152,7 @@ wheels = [
 [[package]]
 name = "bnb-chain-agentkit"
 version = "0.0.1"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "langchain" },
     { name = "langchain-openai" },
@@ -231,7 +231,7 @@ dependencies = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "bnb-chain-agentkit", virtual = "." }]
+requires-dist = [{ name = "bnb-chain-agentkit", editable = "." }]
 
 [[package]]
 name = "ckzg"
