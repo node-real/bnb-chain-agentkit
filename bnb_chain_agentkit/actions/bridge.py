@@ -7,7 +7,7 @@ from web3 import Web3
 
 from bnb_chain_agentkit.actions.abi import ERC20_ABI, L1_STANDARD_BRIDGE_ABI, L2_STANDARD_BRIDGE_ABI
 from bnb_chain_agentkit.actions.bnb_chain_action import BnbChainAction
-from bnb_chain_agentkit.actions.utils.uints import parse_uints
+from bnb_chain_agentkit.actions.utils.units import parse_units
 from bnb_chain_agentkit.provider.bnb_chain_provider import BnbChainProvider, SupportedChain
 
 logger = logging.getLogger(__name__)
@@ -104,7 +104,7 @@ def bridge(
 
             contract = client.eth.contract(from_token, abi=ERC20_ABI)
             decimals = contract.functions.decimals().call()
-            amount_wei = parse_uints(amount, decimals)
+            amount_wei = parse_units(amount, decimals)
 
             # check ERC20 allowance
             allowance = contract.functions.allowance(address, L1_BRIDGE_ADDRESS).call()
@@ -140,7 +140,7 @@ def bridge(
             from_token = Web3.to_checksum_address(from_token)
             contract = client.eth.contract(from_token, abi=ERC20_ABI)
             decimals = contract.functions.decimals().call()
-            amount_wei = parse_uints(amount, decimals)
+            amount_wei = parse_units(amount, decimals)
 
             # check ERC20 allowance
             allowance = contract.functions.allowance(address, L2_BRIDGE_ADDRESS).call()

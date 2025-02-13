@@ -9,7 +9,7 @@ MIN_WEI = 0
 MAX_WEI = 2**256 - 1
 
 
-def format_uints(number: int, decimals: int) -> Union[int, decimal.Decimal]:
+def format_units(number: int, decimals: int) -> Union[int, decimal.Decimal]:
     """
     Takes a number of wei and converts it to any other unit.
     """
@@ -29,7 +29,7 @@ def format_uints(number: int, decimals: int) -> Union[int, decimal.Decimal]:
     return result_value
 
 
-def parse_uints(number: Union[int, float, str, decimal.Decimal], decimals: int) -> int:
+def parse_units(number: Union[int, float, str, decimal.Decimal], decimals: int) -> int:
     """
     Takes a number of a unit and converts it to wei.
     """
