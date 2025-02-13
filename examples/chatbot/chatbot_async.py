@@ -24,7 +24,7 @@ load_dotenv()
 def initialize_agent():
     """Initialize the agent with BNB Chain."""
     # Initialize LLM.
-    llm = ChatOpenAI(model='gpt-4o-mini')
+    llm = ChatOpenAI(model='gpt-4o')
 
     # Configure BNB Chain Langchain Extension.
     bnb_chain = BnbChainAPIWrapper()

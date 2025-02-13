@@ -10,6 +10,7 @@ from solcx import compile_source, install_solc_pragma, set_solc_version_pragma
 from solcx.exceptions import SolcNotInstalled
 from web3 import Web3
 
+from bnb_chain_agentkit.actions.utils.units import parse_units
 from bnb_chain_agentkit.actions.bnb_chain_action import BnbChainAction
 from bnb_chain_agentkit.provider.bnb_chain_provider import BnbChainProvider, SupportedChain
 
@@ -81,9 +82,9 @@ def deploy(
             return 'Token name is required for ERC20.'
         if token_symbol is None:
             return 'Token symbol is required for ERC20.'
-
-        initial_supply_wei = Web3.to_wei(initial_supply, 'wei') if initial_supply else 0
-        print("initial_supply is " + str(initial_supply) , "initial_supply_wei is " +str(initial_supply_wei))
+        
+        initial_supply_wei = parse_units(initial_supply, 18) if initial_supply else 0
+        print("initial_supply in ether is " + str(initial_supply) , "initial_supply_wei is " +str(initial_supply_wei))
         contract_address = deploy_contract(client, 'ERC20', token_name, token_symbol, initial_supply_wei, account)
     elif contract_type == ContractType.ERC721:
         if token_name is None:

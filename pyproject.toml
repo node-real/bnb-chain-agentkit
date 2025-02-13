@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "bnb-chain-agentkit"
-version = "0.0.1"
+version = "0.0.3"
 description = "Langchain extension for BNB Chain"
 readme = "README.md"
 requires-python = ">=3.12"

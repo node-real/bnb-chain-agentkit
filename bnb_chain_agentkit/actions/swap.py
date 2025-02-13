@@ -14,7 +14,7 @@ from bnb_chain_agentkit.actions.abi import (
     WBNB_ABI,
 )
 from bnb_chain_agentkit.actions.bnb_chain_action import BnbChainAction
-from bnb_chain_agentkit.actions.utils.uints import parse_uints
+from bnb_chain_agentkit.actions.utils.units import parse_units
 from bnb_chain_agentkit.provider.bnb_chain_provider import BnbChainProvider, SupportedChain
 
 logger = logging.getLogger(__name__)
@@ -106,7 +106,7 @@ def swap(
     # check allowance
     token = client.eth.contract(address=input_token, abi=ERC20_ABI)
     decimals = token.functions.decimals().call()
-    amount_wei = parse_uints(amount, decimals)
+    amount_wei = parse_units(amount, decimals)
     allowance = token.functions.allowance(address, DEPLOYMENTS[chain]['router']).call()
     if allowance < amount_wei:
         logger.info('Approve the router to spend the input token.')

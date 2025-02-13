@@ -7,7 +7,7 @@ from web3 import Web3
 
 from bnb_chain_agentkit.actions.abi import ERC20_ABI
 from bnb_chain_agentkit.actions.bnb_chain_action import BnbChainAction
-from bnb_chain_agentkit.actions.utils.uints import parse_uints
+from bnb_chain_agentkit.actions.utils.units import parse_units
 from bnb_chain_agentkit.provider.bnb_chain_provider import BnbChainProvider
 
 logger = logging.getLogger(__name__)
@@ -72,7 +72,7 @@ def transfer(
 
         token_name = contract.functions.name().call()
         decimals = contract.functions.decimals().call()
-        amount_wei = parse_uints(amount, decimals)
+        amount_wei = parse_units(amount, decimals)
         tx_hash = contract.functions.transfer(recipient, amount_wei).transact()
 
     client.eth.wait_for_transaction_receipt(tx_hash)
