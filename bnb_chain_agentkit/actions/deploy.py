@@ -10,17 +10,18 @@ from solcx import compile_source, install_solc_pragma, set_solc_version_pragma
 from solcx.exceptions import SolcNotInstalled
 from web3 import Web3
 
+from bnb_chain_agentkit.actions.utils.units import parse_units
 from bnb_chain_agentkit.actions.bnb_chain_action import BnbChainAction
-from bnb_chain_agentkit.provider.bnb_chain_provider import BnbChainProvider
+from bnb_chain_agentkit.provider.bnb_chain_provider import BnbChainProvider, SupportedChain
 
 logger = logging.getLogger(__name__)
 
 _solc_pragma = 'pragma solidity ^0.8.22;'
 
 DEPLOY_PROMPT = """
-This tool helps deploy an ERC contract on BSC.
+This tool helps deploy an ERC contract on BSC or opBNB.
 
-It takes contract type, token name, token symbol, initial supply and base uri as inputs.
+It takes contract type, token name, token symbol, initial supply, base uri and chain as inputs.
 
 Important notes:
 - For ERC20, token name and token symbol are required.
@@ -44,6 +45,7 @@ class DeployInput(BaseModel):
     token_symbol: Optional[str] = Field(None, description='The token symbol. Must be provided for ERC20 and ERC721.')
     initial_supply: Optional[str] = Field('1000000000000000000', description='The initial supply.')
     base_uri: Optional[str] = Field(None, description='The base uri. Must be provided for ERC721 and ERC1155.')
+    chain: SupportedChain = Field(SupportedChain.BSC, description='The chain to perform the deploy on.')
 
 
 def deploy(
@@ -53,8 +55,10 @@ def deploy(
     token_symbol: Optional[str],
     initial_supply: Optional[str],
     base_uri: Optional[str],
+    chain: SupportedChain,
+
 ) -> str:
-    """Deploy an ERC contract on BSC.
+    """Deploy an ERC contract on BSC or opBNB.
 
     Args:
         provider (BnbChainProvider): The provider to use for the deploy.
@@ -63,22 +67,25 @@ def deploy(
         token_symbol (Optional[str]): The token symbol.
         initial_supply (Optional[str]): The initial supply.
         base_uri (Optional[str]): The base uri.
+        chain (Optional[str]): The chain to perform the swap on.
 
     Returns:
         str: A message containing the action details.
     """
 
-    client = provider.get_current_client()
-    prepare_solc()
+    client = provider.get_client(chain)
+    account = provider.get_address()
 
+    prepare_solc()
     if contract_type == ContractType.ERC20:
         if token_name is None:
             return 'Token name is required for ERC20.'
         if token_symbol is None:
             return 'Token symbol is required for ERC20.'
-
-        initial_supply_wei = Web3.to_wei(initial_supply, 'ether') if initial_supply else 0
-        contract_address = deploy_contract(client, 'ERC20', token_name, token_symbol, initial_supply_wei)
+        
+        initial_supply_wei = parse_units(initial_supply, 18) if initial_supply else 0
+        print("initial_supply in ether is " + str(initial_supply) , "initial_supply_wei is " +str(initial_supply_wei))
+        contract_address = deploy_contract(client, 'ERC20', token_name, token_symbol, initial_supply_wei, account)
     elif contract_type == ContractType.ERC721:
         if token_name is None:
             return 'Token name is required for ERC721.'
@@ -87,14 +94,14 @@ def deploy(
         if base_uri is None:
             return 'Base uri is required for ERC721.'
 
-        contract_address = deploy_contract(client, 'ERC721', token_name, token_symbol, base_uri)
+        contract_address = deploy_contract(client, 'ERC721', token_name, token_symbol, base_uri, account)
     elif contract_type == ContractType.ERC1155:
         if base_uri is None:
             return 'Base uri is required for ERC1155.'
 
-        contract_address = deploy_contract(client, 'ERC1155', base_uri)
+        contract_address = deploy_contract(client, 'ERC1155', base_uri, account)
 
-    return f'Contract {contract_type} deployed successfully. Contract address: {contract_address}'
+    return f'{contract_type.value} deployed successfully. Contract address: {contract_address}'
 
 
 def deploy_contract(client: Web3, contract_name: str, *args) -> ChecksumAddress:
@@ -108,9 +115,12 @@ def deploy_contract(client: Web3, contract_name: str, *args) -> ChecksumAddress:
             optimize_runs=200,
         )
 
-    _, contract_interface = compiled_sol.popitem()
+    contract_interface = compiled_sol[f'<stdin>:{contract_name}Contract']
     bytecode = contract_interface['bin']
     abi = contract_interface['abi']
+
+    if len(bytecode) == 0:
+        raise ValueError('Bytecode is empty')
 
     contract = client.eth.contract(abi=abi, bytecode=bytecode)
     tx_hash = contract.constructor(*args).transact()

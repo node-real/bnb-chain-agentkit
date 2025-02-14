@@ -7,7 +7,7 @@ from web3 import Web3
 
 from bnb_chain_agentkit.actions.abi import ERC20_ABI, L1_STANDARD_BRIDGE_ABI, L2_STANDARD_BRIDGE_ABI
 from bnb_chain_agentkit.actions.bnb_chain_action import BnbChainAction
-from bnb_chain_agentkit.actions.utils.uints import parse_uints
+from bnb_chain_agentkit.actions.utils.units import parse_units
 from bnb_chain_agentkit.provider.bnb_chain_provider import BnbChainProvider, SupportedChain
 
 logger = logging.getLogger(__name__)
@@ -78,9 +78,10 @@ def bridge(
     """
 
     address = provider.get_address()
+    recipient = Web3.to_checksum_address(recipient) if recipient else address
 
     from_token = from_token or 'BNB'
-    self_bridge = recipient is None or recipient == address
+    self_bridge = recipient == address
     native_token_bridge = from_token == 'BNB'
 
     client = provider.get_client(from_chain)
@@ -98,10 +99,12 @@ def bridge(
             if to_token is None:
                 raise ValueError('to_token must be provided when bridging ERC20 from BSC to opBNB')
 
-            token_address = Web3.to_checksum_address(from_token)  # type: ignore
-            contract = client.eth.contract(token_address, abi=ERC20_ABI)
+            from_token = Web3.to_checksum_address(from_token)
+            to_token = Web3.to_checksum_address(to_token)
+
+            contract = client.eth.contract(from_token, abi=ERC20_ABI)
             decimals = contract.functions.decimals().call()
-            amount_wei = parse_uints(amount, decimals)
+            amount_wei = parse_units(amount, decimals)
 
             # check ERC20 allowance
             allowance = contract.functions.allowance(address, L1_BRIDGE_ADDRESS).call()
@@ -134,10 +137,10 @@ def bridge(
                     LEGACY_ERC20_ETH_ADDRESS, recipient, amount_wei, 1, '0x'
                 ).transact({'value': value})
         else:
-            token_address = Web3.to_checksum_address(from_token)  # type: ignore
-            contract = client.eth.contract(token_address, abi=ERC20_ABI)
+            from_token = Web3.to_checksum_address(from_token)
+            contract = client.eth.contract(from_token, abi=ERC20_ABI)
             decimals = contract.functions.decimals().call()
-            amount_wei = parse_uints(amount, decimals)
+            amount_wei = parse_units(amount, decimals)
 
             # check ERC20 allowance
             allowance = contract.functions.allowance(address, L2_BRIDGE_ADDRESS).call()

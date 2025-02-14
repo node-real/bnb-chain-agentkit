@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import readline  # noqa: F401
 import sys
 
 from dotenv import load_dotenv
@@ -23,7 +24,7 @@ load_dotenv()
 def initialize_agent():
     """Initialize the agent with BNB Chain."""
     # Initialize LLM.
-    llm = ChatOpenAI(model='gpt-4o-mini')
+    llm = ChatOpenAI(model='gpt-4o')
 
     # Configure BNB Chain Langchain Extension.
     bnb_chain = BnbChainAPIWrapper()
@@ -66,6 +67,9 @@ async def run_chat_mode(agent_executor, config):
                 event['messages'][-1].pretty_print()
 
         except KeyboardInterrupt:
+            print('Goodbye Agent!')
+            sys.exit(0)
+        except EOFError:  # Catch EOFError for handling Ctrl+D
             print('Goodbye Agent!')
             sys.exit(0)
 
