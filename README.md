@@ -130,17 +130,17 @@ for event in events:
 ### Example interactions when using the examples/chatbot 
 
 
-- Check my BNB balance
-    **User**: `get my BNB balance`
+- Check my BNB balance   
+    **User**: `get my BNB balance`   
     **Chatbot**: `Your BNB balance is approximately 0.0838 BNB.`
 
-- Request test coin from faucet
-    **User**: `Request BNB from the BNB Chain official faucet`
+- Request test coin from faucet  
+    **User**: `Request BNB from the BNB Chain official faucet`  
     **Chatbot**: `Successfully requested BNB for 0x123. Transaction hash: 0x456`
  
 
-- Bridge
-    **User**: `Bridge 0.0001 BNB from BSC to opBNB`
+- Bridge  
+    **User**: `Bridge 0.0001 BNB from BSC to opBNB`  
     **Chatbot**: `Successfully bridged 0.0001 BNB from BSC to opBNB. You can view the transaction with hash [0xc7c1a38d6c3cfc7cc379ae326ae771062e0e436963f28fac9b6ee2580d6d4c44](https://bscscan.com/tx/0xc7c1a38d6c3cfc7cc379ae326ae771062e0e436963f28fac9b6ee2580d6d4c44).`
 
 
@@ -150,24 +150,24 @@ for event in events:
     3. Deposit 0.1 0x123 token from BSC to address 0x123 on opBNB. The corresponding token address on opBNB is 0x123
 
 
-- Deploy an ERC20 token
-    **User**: `deploy an ERC20 token with name 'ClydePepper', symbol ClydePepper, decimals 18, total supply 10000 on BSC`
+- Deploy an ERC20 token  
+    **User**: `deploy an ERC20 token with name 'ClydePepper', symbol ClydePepper, decimals 18, total supply 10000 on BSC`  
     **Chatbot**: `The ERC20 token 'ClydePepper' has been successfully deployed on the BSC chain with the contract address: [0x123](https://bscscan.com/address/0x123).`
     
     More user input examples about smart contracts deployment:
     1. `Deploy an ERC1155 contract , baseURI 'https://my-1155peter-base-uri.com'`
     2. `Deploy an ERC721 NFT contract with name 'PitterNFT', symbol 'PitterNFT', baseURI 'https://my-nft-peter-uri.com' on opbnb`
 
-- Transfer
-    **User**: `Transfer 0.0001 BNB to 0x123`
+- Transfer  
+    **User**: `Transfer 0.0001 BNB to 0x123`  
     **Chatbot**: `Successfully transferred 0.0001 BNB to the address [0x123](https://bscscan.com/address/0x123). You can view the transaction with hash [0x123](https://bscscan.com/tx/0x123).`
     
-- Swap
+- Swap  
     You can do swap on pancakeswap by inputing examples as below :
     1. `Swap 0.0001 BNB for USDC on BSC`
     2. `Buy some token of 0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d using 0.01 USDT on BSC. The slippage should be no more than 5%`
 
-- Stake
+- Stake  
     You can stake BNBs on ListaDao by inputting examples as below :
     1. `Stake 0.001 BNB on BSC`
     2. `Deposit 0.0001 BNB to Lista DAO on bsc`
