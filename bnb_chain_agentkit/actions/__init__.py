@@ -7,6 +7,14 @@ from bnb_chain_agentkit.actions.stake import StakeAction
 from bnb_chain_agentkit.actions.swap import SwapAction
 from bnb_chain_agentkit.actions.transfer import TransferAction
 
+# New actions
+from bnb_chain_agentkit.actions.transaction_analytics import (
+    GasFeeEstimationAction,
+    TransactionReceiptAction,
+)
+# from bnb_chain_agentkit.actions.custom_contract import CustomContractCallAction
+# from bnb_chain_agentkit.actions.token_price import TokenPriceQueryAction
+
 
 def get_all_bnb_chain_actions() -> list[type[BnbChainAction]]:
     """Retrieve all subclasses of BnbChainAction defined in the package."""
@@ -28,4 +36,9 @@ __all__ = [
     'BridgeAction',
     'DeployAction',
     'SwapAction',
+    # New actions
+    'GasFeeEstimationAction',
+    'TransactionReceiptAction',
+    'CustomContractCallAction',
+    'TokenPriceQueryAction',
 ]
