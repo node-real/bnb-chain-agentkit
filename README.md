@@ -65,6 +65,7 @@ cp .env.example .env
 - `BSC_PROVIDER_URL`: The URL of the BNB Smart Chain provider.
 - `OPBNB_PROVIDER_URL`: The URL of the Optimism BNB Smart Chain provider.
 - `OPENAI_API_KEY`: The open api key used to interact with chatgpt.
+- `BSCSCAN_API_KEY`: BSCScan API Key to get transaction details if needed  (e.g. "ABCD" (optional)).
 
 You can set your own RPC endpoint or use a public one listed here: [https://docs.bnbchain.org/bnb-smart-chain/developers/json_rpc/json-rpc-endpoint/](https://docs.bnbchain.org/bnb-smart-chain/developers/json_rpc/json-rpc-endpoint/)
 

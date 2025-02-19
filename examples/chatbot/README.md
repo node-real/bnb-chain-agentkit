@@ -30,6 +30,7 @@ uv pip install -e ../.. # the root of the repo
   - BSC_PROVIDER_URL
   - OPBNB_PROVIDER_URL
   - OPENAI_API_KEY
+  - BSCSCAN_API_KEY (optional)
 
 ```bash
 uv run ./chatbot_async.py
