@@ -175,6 +175,21 @@ for event in events:
     3. `Undelegate 0.01 BNB on BSC`
     4. `Claim unlocked BNB from Lista DAO on bsc`
 
+- Transaction analytics  
+    You can ask questions related to transaction analytics as follows :
+    1. `Show me the recent 5 transactions for address 0xD3b0d838cCCEAe7ebF1781D11D1bB741DB7Fe1A7`
+    2. `Track pending transactions for address 0xD3b0d838cCCEAe7ebF1781D11D1bB741DB7Fe1A7`
+    3. `What is the average gas price over the last 10 blocks?`
+    4. `Estimate fee for a transaction with a gas limit of 21000 at 20 Gwei.`
+    5. `What is the total transaction volume for address 0xD3b0d838cCCEAe7ebF1781D11D1bB741DB7Fe1A7 in the last 24 hours?`
+    6. `List all BUSD token transfers for address 0xEFcA8C6D8c27387ed806cB6110426412914d1840.`
+    7. `List all BTCB Token transfers for address 0x7b107da9d81f3F713A63C72b955C530E487aFe65.`
+
+- Token price  
+    You can ask token prices :
+    1. `What is the price of BTC in INR?`
+    2. `What's the price of BTC?`
+
 Please refer to `examples/chatbot` for more detailed usage.
 
 ## 📝 License

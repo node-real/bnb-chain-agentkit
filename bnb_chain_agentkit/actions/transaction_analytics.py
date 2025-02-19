@@ -17,7 +17,6 @@ TOKEN_CONTRACT_ADDRESSES = {
     "Wrapped BNB":"0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
     "BTCB":"0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c",
     "BTCB Token":"0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c",
-    # Add other tokens as needed...
 }
 
 # --------------------------------------------------------------------

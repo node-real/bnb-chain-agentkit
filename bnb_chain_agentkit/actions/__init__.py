@@ -7,13 +7,18 @@ from bnb_chain_agentkit.actions.stake import StakeAction
 from bnb_chain_agentkit.actions.swap import SwapAction
 from bnb_chain_agentkit.actions.transfer import TransferAction
 
-# New actions
 from bnb_chain_agentkit.actions.transaction_analytics import (
     GasFeeEstimationAction,
     TransactionReceiptAction,
+    GasFeeEstimationAction,
+    RecentTransactionsAction,
+    PendingTransactionTrackerAction,
+    GasPriceTrendAnalyzerAction,
+    TransactionFeeEstimatorAction,
+    TransactionVolumeAnalyzerAction,
+    TokenTransferHistoryAction,
 )
-# from bnb_chain_agentkit.actions.custom_contract import CustomContractCallAction
-# from bnb_chain_agentkit.actions.token_price import TokenPriceQueryAction
+from bnb_chain_agentkit.actions.token_price import TokenPriceQueryAction
 
 
 def get_all_bnb_chain_actions() -> list[type[BnbChainAction]]:
@@ -36,9 +41,13 @@ __all__ = [
     'BridgeAction',
     'DeployAction',
     'SwapAction',
-    # New actions
     'GasFeeEstimationAction',
     'TransactionReceiptAction',
-    'CustomContractCallAction',
     'TokenPriceQueryAction',
+    'RecentTransactionsAction',
+    'PendingTransactionTrackerAction',
+    'GasPriceTrendAnalyzerAction',
+    'TransactionFeeEstimatorAction',
+    'TransactionVolumeAnalyzerAction',
+    'TokenTransferHistoryAction'
 ]

@@ -1,4 +1,3 @@
-# bnb_chain_agentkit/actions/token_price.py
 import requests
 from pydantic import BaseModel, Field
 from bnb_chain_agentkit.actions.bnb_chain_action import BnbChainAction
