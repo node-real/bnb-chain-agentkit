@@ -218,11 +218,24 @@ def analyze_transaction_volume(provider: BnbChainProvider, address: str, hours: 
     api_key = os.environ.get("BSCSCAN_API_KEY")
     if not api_key:
         return "BSCSCAN_API_KEY not set in environment."
-    current_time = int(time.time())
-    from_timestamp = current_time - hours * 3600
+    
+    # Get the current block number from the provider.
+    client = provider.get_current_client()
+    latest_block = client.eth.get_block('latest')
+    latest_block_number = latest_block.number
+
+    # Estimate the number of blocks produced in the given time period.
+    # BSC's average block time is approximately 3 seconds.
+    avg_block_time = 3  # seconds per block
+    blocks_in_period = int((hours * 3600) / avg_block_time)
+    startblock = latest_block_number - blocks_in_period
+    if startblock < 0:
+        startblock = 0
+
+    # Use startblock and endblock for the API query.
     url = (
         f"https://api.bscscan.com/api?module=account&action=txlist&address={address}"
-        f"&starttimestamp={from_timestamp}&endtimestamp={current_time}&sort=desc&apikey={api_key}"
+        f"&startblock={startblock}&endblock={latest_block_number}&sort=desc&apikey={api_key}"
     )
     try:
         response = requests.get(url, timeout=10)
@@ -235,8 +248,9 @@ def analyze_transaction_volume(provider: BnbChainProvider, address: str, hours: 
         count = len(txs)
         avg_volume = total_volume_bnb / count if count > 0 else 0
         return (
-            f"In the last {hours} hours, address {address} has a total transaction volume of "
-            f"{total_volume_bnb} BNB over {count} transactions, averaging {avg_volume} BNB per transaction."
+            f"In the last {hours} hours (from block {startblock} to {latest_block_number}), address {address} "
+            f"has a total transaction volume of {total_volume_bnb} BNB over {count} transactions, averaging "
+            f"{avg_volume} BNB per transaction."
         )
     except Exception as e:
         return f"Error analyzing transaction volume: {str(e)}"
